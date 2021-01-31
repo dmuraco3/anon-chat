@@ -1,0 +1,53 @@
+body {
+    margin: 0%;
+    background-color: rgb(30,30,30);
+    color: white;
+    font-family: 'Anonymous Pro', monospace;
+}
+
+main {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+footer {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 30px;
+    position: fixed ;
+    bottom: 0;
+    left: 0;
+    background-color:  rgb(60,60,60);
+    border-radius: 5px;
+    display: flex;
+}
+
+footer form {
+    float: right;
+}
+
+footer form input {
+    border: none;
+    background: none;
+    padding: 10px;
+    color: white;
+}
+
+footer form input:focus {
+    outline: none;
+}
+
+footer form ::placeholder {
+    color: white;
+}
+footer form button {
+    border: none;
+}
+
+footer a {
+    display: block;
+    flex: 1;
+    padding: 10px;
+    cursor: pointer;
+    border-right: solid 1px white;
+}

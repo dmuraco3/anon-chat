@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://kit.fontawesome.com/52d29cc44f.js" crossorigin="anonymous"></script>
+    <script src="/static/socket.io.min.js"></script>
+    <script src="/static/chat.js"></script>
+    <link rel="stylesheet" href="/static/chat.css">
+</head>
+<body>
+    <main>
+        <div class="chat" id="chat">
+    
+        </div>
+        <footer>
+            <a class="add-image"><i class="fas fa-plus-circle"></i></a>
+            <form action="javascript: void(0);" onsubmit="sendChat();">
+                <input type="text" placeholder="message" id="message">
+                <button type="submit">Send</button>
+            </form>
+        </footer>
+    </main>
+</body>
+</html>

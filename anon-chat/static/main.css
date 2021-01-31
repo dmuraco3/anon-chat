@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap');
+
+body {
+    margin: 0%;
+    background-color: rgb(30,28,29);
+    color: white;
+    font-family: 'Anonymous Pro', monospace;
+}
+
+.title {
+    text-align: center;
+    width: 100%;
+}
+
+.title h1 {
+    text-align: center;
+    font-weight: 100;
+    letter-spacing: 1rem;
+}
+
+.enter-room {
+    text-align: center;
+}
+
+.enter-room a {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.private-room {
+    margin: 20px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+.private-room a {
+    color: blue;
+}
+
+.tut {
+    border-top: #c9bfa7 solid 0.5px;
+    padding-top: 20px;
+    color: #c9bfa7;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.public-rooms {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+}
+
+.public-rooms table .table-header, .public-rooms table td {
+    padding: 20px;
+    border: solid 1px white;
+}
+
+.join {
+    cursor: pointer;
+}

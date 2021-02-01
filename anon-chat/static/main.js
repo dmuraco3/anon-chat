@@ -1,24 +1,17 @@
-function joinroom() {
-    //room_id = document.getElementById("ID").value
-    loc = window.location.href
-    loc = loc.split("/")
-    room_id = loc[loc.length - 1]
-    nick = prompt("enter nickname")
-    var socket = io(window.location.href.split("/")[window.location.href.split("/").length - 2]);
-    socket.on('connect', function(){
-        socket.emit('join', {data: {room: room_id, nick: nick}})
-    })
-    socket.on('message', function(data) {
-        chat = document.getElementById("chat")
-        chat.innerHTML += data;
-        chat.innerHTML += "<br>";
-    })
-    console.log("socket")
-    return socket
-}
+var socket = io(window.location.href.split("/")[window.location.href.split("/").length - 2]);
+socket.on('connect', function(){
+    console.log("connected")
+    socket.emit('update_rooms')
+})
+socket.on('message', function(data) {
+    console.log(data)
+    PublicRoomsTable(data)
+})
 
 
-function PublicRoomsTable() {
+function PublicRoomsTable(data) {
+    keys = Object.keys(data)
+
     table = document.getElementById("public-rooms-table")
     table.innerHTML = ''
     table.innerHTML += `
@@ -28,23 +21,24 @@ function PublicRoomsTable() {
         <th class="table-header">Users Online </th>
         <th></th>
     </tr>
-    <tr>
-        <td>qbcsaf</td>
-        <td>2</td>
-        <td onclick="alert('clicked')" class="join">Join</td>
-    </tr>
-    <tr>
-        <td>qbcsaf</td>
-        <td>2</td>
-        <td onclick="alert('clicked')" class="join">Join</td>
-    </tr>
     `
+    for (index = 0; index < keys.length; index++) { 
+        console.log(keys[index]);
+        console.log(data[keys[index]]) 
+        table.innerHTML += `
+        <tr>
+            <td>${keys[index]}</td>
+            <td>${data[keys[index]]['users']}</td>
+            <td onclick="JoinRoomFromTable(${"'" + keys[index] + "'"})" class="join">Join</td>
+        </tr>
+        `
+    } 
 }
 
-function JoinRoomFromTable(index){
-    return
+function JoinRoomFromTable(room){
+    window.location.href = (window.location.protocol) + "//" + (window.location.host) + "/" + (room)
 }
 
-document.addEventListener('DOMContentLoaded', function(){
-    PublicRoomsTable()
+document.addEventListener('beforeunload', function() {
+    socket.disconnect()
 })

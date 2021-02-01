@@ -1,3 +1,5 @@
+const { table } = require("console")
+
 nick = prompt("enter nickname")
 if(nick != null){
     loc = window.location.href
@@ -25,12 +27,20 @@ else {
 }
 console.log("socket")
 
-function sendChat() {
-    message = document.getElementById("message").value
-    socket.emit('send_chat', {data: {message: message}})
-    document.getElementById("message").value = ""
+function sendChat(event) {
+    if(event.keyCode == "13"){
+        event.preventDefault()
+        message = document.getElementById("message").innerHTML
+        socket.emit('send_chat', {data: {message: message}})
+        document.getElementById("message").innerHTML = ""
+    }
+}
+
+function randomEmoji() {
+    document.get
 }
 
 window.addEventListener('beforeunload', function() {
     socket.disconnect()
 })
+

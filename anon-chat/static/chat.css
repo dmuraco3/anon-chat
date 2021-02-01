@@ -20,34 +20,20 @@ footer {
     background-color:  rgb(60,60,60);
     border-radius: 5px;
     display: flex;
+    width: 60%;
 }
 
-footer form {
-    float: right;
+#message {
+    padding: 10px 0px;
+    flex: 1;
+    width: 60%;
 }
-
-footer form input {
-    border: none;
-    background: none;
-    padding: 10px;
-    color: white;
-}
-
-footer form input:focus {
+#message:focus {
     outline: none;
-}
-
-footer form ::placeholder {
-    color: white;
-}
-footer form button {
-    border: none;
 }
 
 footer a {
     display: block;
-    flex: 1;
     padding: 10px;
     cursor: pointer;
-    border-right: solid 1px white;
 }

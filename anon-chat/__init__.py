@@ -1,5 +1,5 @@
 from flask import Flask, render_template, abort, session
-from flask_socketio import SocketIO, emit, send, join_room, leave_room, rooms
+from flask_socketio import SocketIO, emit, send, join_room, leave_room
 import json
 import os
 
@@ -7,7 +7,15 @@ app = Flask(__name__)
 app.secret_key = os.urandom(32)
 socketio = SocketIO(app)
 
-users = {}
+rooms = {
+    "lounge": {
+        "users": 0
+    },
+    "programming": {
+        "users": 0
+    }
+}
+always_open = ["lounge", "programming"]
 
 @app.route("/")
 def home():
@@ -19,16 +27,15 @@ def private():
 
 @app.route("/<room_id>")
 def chat_room(room_id):
-    with open("/home/dylan/Desktop/anon-chat/anon-chat/rooms.json") as file:
-        data = json.load(file)
-        file.close()
-    for num in data:
-        if room_id == data[num]["room_id"]:
+    counter = 1
+    for key in rooms:
+        if room_id == key:
             return render_template("/chat/index.html")
         
-        if data[num] == data[str(len(data))]:
-            if room_id != data[num]:
-                return "room does not exist"
+        if counter == len(rooms):
+            if room_id != key:
+                return render_template("/chat/index.html")
+        counter += 1
 
 
 @socketio.on('join')
@@ -36,14 +43,36 @@ def join(data):
     session['nick'] = data['data']['nick']
     session['room'] = data['data']['room']
     join_room(session['room'])
-    print(rooms())
+    try:
+        rooms[session['room']]['users'] += 1
+    except KeyError:
+        rooms[session['room']] = {}
+        rooms[session['room']]['users'] = 0
+        rooms[session['room']]['users'] += 1
+
+    print(rooms)
     send(session['nick'] + " has entered the room.", room=session['room'])
+    return rooms
 
 @socketio.on('disconnect')
 def disconnect():
-    send(session['nick'] + " has left the room.", room=session['room'])
-    leave_room(session['room'])
-    print(session['nick'], "left the chat")
+    try:
+        send(session['nick'] + " has left the room.", room=session['room'])
+        leave_room(session['room'])
+        rooms[session['room']]['users'] -= 1
+        if rooms[session['room']]['users'] == 0:
+            if session['room'] in always_open:
+                pass
+            else:
+                del(rooms[session['room']])  
+        return rooms
+    except KeyError:
+        pass
+
+@socketio.on('update_rooms')
+def update_rooms():
+    print(rooms)
+    send(rooms)
 
 @socketio.on('send_chat')
 def send_chat(data):

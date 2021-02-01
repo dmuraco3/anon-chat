@@ -7,6 +7,7 @@
     <script src="https://kit.fontawesome.com/52d29cc44f.js" crossorigin="anonymous"></script>
     <script src="/static/socket.io.min.js"></script>
     <script src="/static/chat.js"></script>
+    <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/chat.css">
 </head>
 <body>
@@ -16,10 +17,8 @@
         </div>
         <footer>
             <a class="add-image"><i class="fas fa-plus-circle"></i></a>
-            <form action="javascript: void(0);" onsubmit="sendChat();">
-                <input type="text" placeholder="message" id="message">
-                <button type="submit">Send</button>
-            </form>
+            <div id="message" contenteditable="true" onkeypress="sendChat(event)">&#x1F354 :bowtie:</div>
+            <div><a id="emoji-button"></a></div>
         </footer>
     </main>
 </body>

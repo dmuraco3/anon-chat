@@ -2,6 +2,7 @@ from flask import Flask, render_template, abort, session
 from flask_socketio import SocketIO, emit, send, join_room, leave_room
 import json
 import os
+from codeBlock import codeBlock
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -26,7 +27,7 @@ def private():
     return render_template("/private/index.html")
 
 @app.route("/<room_id>")
-def chat_room(room_id):
+def chat_room(room_id): 
     counter = 1
     for key in rooms:
         if room_id == key:
@@ -79,7 +80,8 @@ def send_chat(data):
     message = {}
     if session['room']:
         message['nick'] = session['nick']
-        message['message'] = data['data']['message']
+        message['message'] = codeBlock(data['data']['message'])
+        print(message['message'])
         send(message, room=session['room'])
 
 if __name__ == "__main__":
